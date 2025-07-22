@@ -39,7 +39,7 @@ async function initDB() {
     console.log('Sample data inserted successfully');
   } catch (error) {
     console.error('MongoDB connection error:', error);
-    console.log('Failed to connect to MongoDB. Server will continue but database operations may fail.');
+    throw error; // Re-throw the error to prevent server startup
   }
 }
 
@@ -738,4 +738,7 @@ initDB().then(() => {
     console.log('   User: user@user.com / user123');
     console.log('💾 Using MongoDB Atlas database');
   });
+}).catch((error) => {
+  console.error('Failed to start server due to database connection error:', error.message);
+  process.exit(1);
 });
