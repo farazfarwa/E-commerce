@@ -52,7 +52,7 @@ const CategoryPage: React.FC = () => {
 
         // For specific categories
         try {
-          const categoryRes = await axios.get(`http://localhost:3002/api/categories/${categoryId}`);
+          const categoryRes = await axios.get(`/api/categories/${categoryId}`);
           setCategory(categoryRes.data);
         } catch (err) {
           setError("Category not found");
@@ -60,7 +60,7 @@ const CategoryPage: React.FC = () => {
         }
 
         // Fetch products
-        const productsRes = await axios.get('http://localhost:3002/api/products');
+        const productsRes = await axios.get('/api/products');
         const filteredProducts = productsRes.data.filter(
           (p: Product) => p.category_id === categoryId
         );

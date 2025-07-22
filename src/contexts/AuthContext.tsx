@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post('http://localhost:3002/api/login', {
+      const response = await axios.post('/api/login', {
         email,
         password
       });
@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signup = async (name: string, email: string, password: string, role: string = 'user') => {
     try {
-      const response = await axios.post('http://localhost:3002/api/signup', {
+      const response = await axios.post('/api/signup', {
         name,
         email,
         password,
