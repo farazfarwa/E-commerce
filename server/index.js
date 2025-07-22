@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -12,8 +11,6 @@ import Product from './models/Product.js';
 import Transaction from './models/Transaction.js';
 import Order from './models/Order.js';
 import ContactMessage from './models/ContactMessage.js';
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -27,14 +24,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // MongoDB connection
-const MONGODB_URI = 'mongodb+srv://farazabdullah267:SjgRgW3SlAAa05Rl@project.ifut3ay.mongodb.net/fashionhub';
+const MONGODB_URI = 'mongodb+srv://farazabdullah267:SjgRgW3SlAAa05Rl@project.ifut3ay.mongodb.net/fashionhub?retryWrites=true&w=majority';
 
 // Initialize database connection
 async function initDB() {
   try {
     await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     });
     
     console.log('Connected to MongoDB Atlas');
@@ -42,7 +39,7 @@ async function initDB() {
     console.log('Sample data inserted successfully');
   } catch (error) {
     console.error('MongoDB connection error:', error);
-    console.log('Using in-memory fallback data for demo');
+    console.log('Failed to connect to MongoDB. Server will continue but database operations may fail.');
   }
 }
 
