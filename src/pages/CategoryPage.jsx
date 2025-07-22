@@ -1,31 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Star, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 import { Package } from 'lucide-react';
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image_url: string;
-  stock: number;
-  category_id: number;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  description: string;
-}
-
-const CategoryPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+const CategoryPage = () => {
+  const { id } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
-  const [category, setCategory] = useState<Category | null>(null);
+  const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +46,7 @@ const CategoryPage: React.FC = () => {
         // Fetch products
         const productsRes = await axios.get('/api/products');
         const filteredProducts = productsRes.data.filter(
-          (p: Product) => p.category_id === categoryId
+          (p) => p.category_id === categoryId
         );
         setProducts(filteredProducts);
 

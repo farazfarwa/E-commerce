@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { 
@@ -7,43 +7,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image_url: string;
-  stock: number;
-  category_id: number;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  description: string;
-}
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: 'admin' | 'user';
-  created_at: string;
-}
-
-interface Transaction {
-  id: number;
-  user_id: number;
-  product_id: number;
-  quantity: number;
-  status: 'ordered' | 'shipped' | 'delivered' | 'cancelled';
-  transaction_date: string;
-  user_name: string;
-  product_name: string;
-  price: number;
-}
-
-const AdminDashboard: React.FC = () => {
+const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -51,9 +15,9 @@ const AdminDashboard: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState<'product' | 'category'>('product');
-  const [editingItem, setEditingItem] = useState<any>(null);
-  const [formData, setFormData] = useState<any>({});
+  const [modalType, setModalType] = useState('product');
+  const [editingItem, setEditingItem] = useState(null);
+  const [formData, setFormData] = useState({});
   const [message, setMessage] = useState('');
   
   const { user, logout } = useAuth();
@@ -87,7 +51,7 @@ const AdminDashboard: React.FC = () => {
     setTimeout(() => setMessage(''), 3000);
   };
 
-  const openModal = (type: 'product' | 'category', item?: any) => {
+  const openModal = (type, item) => {
     setModalType(type);
     setEditingItem(item);
     
@@ -113,7 +77,7 @@ const AdminDashboard: React.FC = () => {
     setFormData({});
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     try {
@@ -142,7 +106,7 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleDelete = async (type: 'product' | 'category', id: number) => {
+  const handleDelete = async (type, id) => {
     if (!confirm('Are you sure you want to delete this item?')) return;
     
     try {
@@ -160,7 +124,7 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const updateTransactionStatus = async (id: number, status: string) => {
+  const updateTransactionStatus = async (id, status) => {
     try {
       await axios.put(`/api/transactions/${id}`, { status });
       showMessage('Transaction status updated!');
@@ -170,7 +134,7 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const updateUserRole = async (id: number, role: string) => {
+  const updateUserRole = async (id, role) => {
     try {
       await axios.put(`/api/users/${id}`, { role });
       showMessage('User role updated!');

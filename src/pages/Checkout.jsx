@@ -1,23 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { ArrowLeft, CreditCard, Truck, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 
-interface DeliveryInfo {
-  fullName: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-}
-
-const Checkout: React.FC = () => {
+const Checkout = () => {
   const [step, setStep] = useState(1);
-  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfo>({
+  const [deliveryInfo, setDeliveryInfo] = useState({
     fullName: '',
     email: '',
     phone: '',
@@ -29,18 +19,18 @@ const Checkout: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const [loading, setLoading] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [orderId, setOrderId] = useState<number | null>(null);
+  const [orderId, setOrderId] = useState(null);
 
   const { cartItems, getTotalPrice, clearCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const handleDeliverySubmit = (e: React.FormEvent) => {
+  const handleDeliverySubmit = (e) => {
     e.preventDefault();
     setStep(2);
   };
 
-  const handlePaymentSubmit = (e: React.FormEvent) => {
+  const handlePaymentSubmit = (e) => {
     e.preventDefault();
     setStep(3);
   };

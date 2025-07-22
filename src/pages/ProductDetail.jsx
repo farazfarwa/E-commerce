@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import { ArrowLeft, ShoppingCart, Star, Package, Truck, Shield, Heart, Plus, Minus } from 'lucide-react';
 import axios from 'axios';
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image_url: string;
-  stock: number;
-  category_id: number;
-}
-
-const ProductDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
+const ProductDetail = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
@@ -33,7 +23,7 @@ const ProductDetail: React.FC = () => {
     }
   }, [id]);
 
-  const fetchProduct = async (productId: number) => {
+  const fetchProduct = async (productId) => {
     try {
       const response = await axios.get(`/api/products/${productId}`);
       setProduct(response.data);

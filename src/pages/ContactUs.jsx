@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Home, ArrowLeft, MessageSquare, Instagram, Send } from 'lucide-react';
 import axios from 'axios';
 
-const ContactUs: React.FC = () => {
+const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,7 +13,7 @@ const ContactUs: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     

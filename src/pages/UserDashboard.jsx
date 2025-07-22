@@ -1,24 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { User, Package, ShoppingBag, LogOut, Home, Clock, CheckCircle, Truck, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 
-interface Order {
-  id: number;
-  user_id: number;
-  user_name: string;
-  total_amount: number | string | null;
-  status: 'ordered' | 'shipped' | 'delivered' | 'cancelled';
-  created_at: string;
-  items: Array<{
-    product_name: string;
-    quantity: number;
-    price: number;
-  }>;
-}
-
-const UserDashboard: React.FC = () => {
+const UserDashboard = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -45,14 +31,14 @@ const UserDashboard: React.FC = () => {
       
       // Calculate stats from orders
       const totalOrders = userOrders.length;
-      const totalSpent = userOrders.reduce((sum: number, order: Order) => {
+      const totalSpent = userOrders.reduce((sum, order) => {
         const amount = order.total_amount ? Number(order.total_amount) : 0;
         return sum + (isNaN(amount) ? 0 : amount);
       }, 0);
-      const pendingOrders = userOrders.filter((order: Order) => 
+      const pendingOrders = userOrders.filter((order) => 
         order.status === 'ordered' || order.status === 'shipped'
       ).length;
-      const deliveredOrders = userOrders.filter((order: Order) => 
+      const deliveredOrders = userOrders.filter((order) => 
         order.status === 'delivered'
       ).length;
       
@@ -64,7 +50,7 @@ const UserDashboard: React.FC = () => {
     }
   };
 
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = (status) => {
     switch (status) {
       case 'ordered':
         return <Clock className="h-5 w-5 text-yellow-500" />;
@@ -79,7 +65,7 @@ const UserDashboard: React.FC = () => {
     }
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status) => {
     switch (status) {
       case 'ordered':
         return 'bg-yellow-900/20 text-yellow-400 border border-yellow-800';

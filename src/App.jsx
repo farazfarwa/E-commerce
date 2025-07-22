@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
@@ -13,7 +12,7 @@ import ContactUs from './pages/ContactUs';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 
-const ProtectedRoute = ({ children, adminOnly = false }: { children: React.ReactNode; adminOnly?: boolean }) => {
+const ProtectedRoute = ({ children, adminOnly = false }) => {
   const { user } = useAuth();
 
   if (!user) {

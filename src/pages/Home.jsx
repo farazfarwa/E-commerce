@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
@@ -6,31 +6,7 @@ import { ShoppingCart, User, LogOut, Store, Search, ChevronRight, Plus } from 'l
 import axios from 'axios';
 import Footer from './Footer';
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image_url: string;
-  stock: number;
-  category_id: number;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  description: string;
-}
-
-interface HeroSlide {
-  id: number;
-  title: string;
-  subtitle: string;
-  image: string;
-  productId: number;
-}
-
-const Home: React.FC = () => {
+const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,7 +16,7 @@ const Home: React.FC = () => {
   const { user, logout } = useAuth();
   const { getTotalItems, addToCart } = useCart();
 
-  const heroSlides: HeroSlide[] = [
+  const heroSlides = [
     {
        id: 1,
     title: "Elegant Women's Pants",
@@ -96,7 +72,7 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (product) => {
     addToCart(product);
     // You could add a toast notification here
   };

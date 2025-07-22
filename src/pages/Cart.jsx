@@ -1,10 +1,9 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { ShoppingCart, Plus, Minus, Trash2, ArrowLeft, ArrowRight } from 'lucide-react';
 
-const Cart: React.FC = () => {
+const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart, getTotalPrice } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
